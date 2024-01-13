@@ -175,4 +175,5 @@ class SpeechHelper():
                           response_lang=self.language,
                           summarizer="vectara-summary-ext-v1.3.0")
 
-        self.logger.info(result.summary[0].text)
+        #self.logger.info(result.summary[0].text)
+        return result

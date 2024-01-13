@@ -1,0 +1,11 @@
+LICENSE.md
+README.md
+setup.py
+test/test_speech.py
+vectara_speech/__init__.py
+vectara_speech/speech.py
+vectara_speech_helper.egg-info/PKG-INFO
+vectara_speech_helper.egg-info/SOURCES.txt
+vectara_speech_helper.egg-info/dependency_links.txt
+vectara_speech_helper.egg-info/requires.txt
+vectara_speech_helper.egg-info/top_level.txt
