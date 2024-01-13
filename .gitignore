@@ -1,6 +1,7 @@
 _config
 pythonProject
 **/__pycache__
+**/.ipynb_checkpoints
 .venv
 admin.proto
 status.proto
@@ -9,4 +10,4 @@ status.proto
 test.db
 build
 dist
-vectara_skunk_client.egg-info
+vectara_speech_helper.egg-info
