@@ -105,7 +105,13 @@ class SpeechHelper():
                 self.corpus_id = corpus.id
 
             path = Path(self.corpus_path)
-            for corpus_file in path.glob("**/*"):
+
+            extensions = ["pdf", "docx", "txt", "json"]
+            files = []
+            for extension in extensions:
+                files.extend(path.glob(f"**/*.{extension}"))
+
+            for corpus_file in files:
                 # TODO Check whether file already uploaded
                 # TODO Check sha1_hash on uploaded file
                 self.logger.info(f"Uploading [{corpus_file}]")
