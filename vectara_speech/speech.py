@@ -2,6 +2,8 @@ from typing import Union, List
 from pathlib import Path
 from vectara_client.core import Client, Factory
 from vectara_client.util import StandardPromptFactory
+from vectara_speech.render import WordRenderer
+from datetime import datetime
 import os
 
 import logging
@@ -133,9 +135,11 @@ class SpeechHelper():
         if self.example_text:
             # Sanitize input for prompt.
             example_speech = self.example_text.replace("\n", "\\n ")
+            speech_for_doc = self.example_text.replace("\n", "\n\n")
         elif self.example_path:
             with open(self.example_path, 'r') as f:
                 example_speech = f.read().replace("\n", "\\n ")
+                speech_for_doc = f.read().replace("\n", "\n\n")
         else:
             raise Exception("You must specify either [example_text] or [example_path]")
 
@@ -150,7 +154,7 @@ class SpeechHelper():
         prompt_factory = StandardPromptFactory(system_prompt, user_prompt)
         prompt = prompt_factory.build()
 
-        return prompt
+        return prompt, speech_for_doc
 
 
     def build_speech(self):
@@ -173,13 +177,26 @@ class SpeechHelper():
         self._validate()
         self._init_client()
         self._build_corpus()
-        prompt = self._build_custom_prompt()
+        prompt, example_speech = self._build_custom_prompt()
 
         qs = self.client.query_service
         result = qs.query(self.topic,
                           self.corpus_id, promptText=prompt, re_rank=True,
                           response_lang=self.language,
                           summarizer="vectara-summary-ext-v1.3.0")
+
+        cover_template = Path("resources/templates/basic_cover.mdt")
+
+        values = {
+            'topic': self.topic,
+            'author': 'Unknown',
+            'speech': result.summary[0].text,
+            'example_text': example_speech,
+            'date_generated': datetime.today().strftime('%d/%m/%Y')
+        }
+
+        renderer = WordRenderer(cover_template, f"{self.topic}.docx")
+        renderer.render(values)
 
         #self.logger.info(result.summary[0].text)
         return result

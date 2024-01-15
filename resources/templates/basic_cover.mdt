@@ -1,0 +1,43 @@
+Speech - {{data.topic}}
+==============
+
+***{{data.topic}}***
+
+**Requested By:** {{data.author}}
+**Generated Date:** {{data.date_generated}}
+
+---
+Template TODOs
+
+1. Add in version information (version of generator)
+2. Add in technical metadata about the query (corpus queried, re-rank config, summarization params etc)
+
+---
+
+# Preface
+This document is an example of a speech curation using an example to style the resultant speech on. The generated
+speech will utilise Retrieval Augmented Generation (RAG) to ground the result in fact and minimize hallucination.
+
+You should still review the output and references. Vectara takes no responsibility for this step, even if RAG as
+an approach has less likelihood of a hallucination.
+
+# Speech Style
+The speech engine was provided the following example to style the resultant speech.
+
+{{data.example_text}}
+
+---
+# Speech Overview
+
+{{data.speech}}
+
+---
+# References
+
+TBD Lets put the speech in here
+
+
+
+
+
+---
